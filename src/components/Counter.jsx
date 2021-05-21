@@ -1,11 +1,20 @@
+import { useState } from 'react';
+
 export function Counter() {
+    const [counter, setCounter] = useState(0);
+    function increment(){
+        setCounter(counter + 1);
+    }
+
     return (
         <div>
             <h2>
-                0
+                {counter}
             </h2>
 
-            <button type="button">Add</button>
+            <button type="button" onClick={increment}>
+                Add
+            </button>
         </div>
     );
 }
