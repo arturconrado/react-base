@@ -1,26 +1,27 @@
-import { RepositoryItem } from "./RepositoryItem"
+import {RepositoryItem} from "./RepositoryItem"
+import '../styles/repositories.scss';
+import { useState, useEffect } from "react";
 
-const repository = {
-    name: 'unformOBJ',
-    description: 'usando um objs pra declarar a propiedade do repositorio',
-    link: 'https://github.com'
-}
 
-export function RepositoryList(){
-    return(
+export function RepositoryList() {
+    const [repositories, setRepositories] = useState([]);
+
+    useEffect(() => {
+        fetch('https://api.github.com/orgs/rocketseat/repos')
+        .then(response => response.json())
+        .then(data => setRepositories(data))
+    }, []);
+
+
+    return (
         <section className="repository-list">
             <h1> lista de repositorios</h1>
 
             <ul>
-                <RepositoryItem repository={repository} />
-
-                <RepositoryItem />
-
-
-                <RepositoryItem />
-
-                <RepositoryItem />
-
+                {repositories.map(repository => {
+                    return <RepositoryItem key={repository.name} repository={repository}/>
+                })}
+                
             </ul>
         </section>
     );
